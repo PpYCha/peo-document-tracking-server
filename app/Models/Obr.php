@@ -5,17 +5,17 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Abc extends Model
+class Obr extends Model
 {
     use HasFactory;
-    protected $table = 'abcs';
+    protected $table = 'obrs';
     protected $fillable = [
-        'abcStatus',
-        'abcDate',
-        'abc',
-        'abcRemarks',
-        'abcState',
+        'obrStatus',
+        'obrDate',
+        'obr',
+        'obrRemarks',
+        'obrNumbers',
+        'obrState',
         'document_id',
     ];
-
 }

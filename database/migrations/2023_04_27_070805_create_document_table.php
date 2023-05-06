@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('controlNumber')->uniqe();
             $table->string('projectTitle')->require();
             $table->string('contractor')->nullable();
-            $table->string('barangayDocument')->require();
+            $table->string('barangayDocument')->nullable();
             $table->string('municipalityDocument')->require();
             $table->timestamps();
         });

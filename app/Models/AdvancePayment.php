@@ -5,17 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Abc extends Model
+class AdvancePayment extends Model
 {
     use HasFactory;
-    protected $table = 'abcs';
+    protected $table = 'advancePayments';
     protected $fillable = [
-        'abcStatus',
-        'abcDate',
-        'abc',
-        'abcRemarks',
-        'abcState',
+        'apStatus',
+        'apDate',
+        'ap',
+        'apRemarks',
+        'apState',
         'document_id',
     ];
-
 }

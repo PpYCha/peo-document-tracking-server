@@ -5,17 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Abc extends Model
+class ScopeOfWork extends Model
 {
     use HasFactory;
-    protected $table = 'abcs';
+    protected $table = 'scopeOfWorks';
     protected $fillable = [
-        'abcStatus',
-        'abcDate',
-        'abc',
-        'abcRemarks',
-        'abcState',
+        'sowStatus',
+        'sowDate',
+        'sow',
+        'sowRemarks',
+        'sowState',
         'document_id',
     ];
-
 }

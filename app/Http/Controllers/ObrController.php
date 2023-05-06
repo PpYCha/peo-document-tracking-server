@@ -2,21 +2,21 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Abc;
+use App\Models\Obr;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
-class AbcController extends Controller
+class ObrController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $abcs = Abc::all();
+        $obrs = Obr::all();
         return response()->json([
             'status' => 200,
-            'abcs' => $abcs,
+            'obrs' => $obrs,
         ]);
     }
 
@@ -34,41 +34,43 @@ class AbcController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'abcStatus' => 'required',
-            'abcDate' => 'required',
-            'abc' => 'required',
-            'abcRemarks' => 'nullable',
-            'abcState' => 'required',
+            'obrStatus' => 'required',
+            'obrDate' => 'required',
+            'obr' => 'required',
+            'obrRemarks' => 'nullable',
+            'obrState' => 'required',
+            'obrNumbers' => 'nullable',
             'document_id' => 'required',
         ]);
 
         if ($validator->fails()) {
             return response()->json([
-                'message' => 'Unable to create abc.',
+                'message' => 'Unable to create obr.',
                 'errors' => $validator->errors(),
             ], 422);
         }
 
         $data = $request->only([
-            'abcStatus',
-            'abcDate',
-            'abc',
-            'abcRemarks',
-            'abcState',
+            'obrStatus',
+            'obrDate',
+            'obr',
+            'obrRemarks',
+            'obrNumbers',
+            'obrState',
             'document_id']);
 
-        $abc = Abc::create($data);
+        $obr = Obr::create($data);
 
         return response()->json([
-            'message' => 'Abc created successfully.',
-            'abc' => $abc,
+            'message' => 'Obr created successfully.',
+            'obr' => $obr,
         ], 201);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Abc $abc)
+    public function show(Obr $obr)
     {
         //
     }
@@ -76,7 +78,7 @@ class AbcController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Abc $abc)
+    public function edit(Obr $obr)
     {
         //
     }
@@ -87,49 +89,51 @@ class AbcController extends Controller
     public function update(Request $request, string $document_id)
     {
         $validator = Validator::make($request->all(), [
-            'abcStatus' => 'required',
-            'abcDate' => 'required',
-            'abc' => 'required',
-            'abcRemarks' => 'nullable',
-            'abcState' => 'required',
+            'obrStatus' => 'required',
+            'obrDate' => 'required',
+            'obr' => 'required',
+            'obrRemarks' => 'nullable',
+            'obrState' => 'required',
+            'obrNumbers' => 'nullable',
             'document_id' => 'required',
         ]);
 
         if ($validator->fails()) {
             return response()->json([
-                'message' => 'Unable to update abc.',
+                'message' => 'Unable to update obr.',
                 'errors' => $validator->errors(),
             ], 422);
         }
 
-        $abc = Abc::where('document_id', $document_id)->firstOrFail();
+        $obr = Obr::where('document_id', $document_id)->firstOrFail();
 
         $data = $request->only([
-            'abcStatus',
-            'abcDate',
-            'abc',
-            'abcRemarks',
-            'abcState',
+            'obrStatus',
+            'obrDate',
+            'obr',
+            'obrRemarks',
+            'obrNumbers',
+            'obrState',
             'document_id',
         ]);
 
-        $abc->update($data);
+        $obr->update($data);
 
         return response()->json([
-            'message' => 'Abc updated successfully.',
-            'abc' => $abc,
+            'message' => 'Obr updated successfully.',
+            'obr' => $obr,
         ], 200);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Abc $abc)
+    public function destroy(Obr $obr)
     {
-        $abc->delete();
+        $obr->delete();
 
         return response()->json([
-            'message' => 'abc deleted successfully.',
+            'message' => 'Obr deleted successfully.',
         ], 200);
     }
 }

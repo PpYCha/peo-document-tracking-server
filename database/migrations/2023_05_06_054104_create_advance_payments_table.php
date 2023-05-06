@@ -11,13 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('abcs', function (Blueprint $table) {
+        Schema::create('advancePayments', function (Blueprint $table) {
             $table->id();
-            $table->string('abcStatus');
-            $table->date('abcDate');
-            $table->string('abc');
-            $table->string('abcRemarks');
-            $table->string('abcState');
+            $table->string('apStatus');
+            $table->date('apDate');
+            $table->string('ap');
+            $table->string('apRemarks');
+            $table->string('apState');
             $table->bigInteger('document_id')->unsigned();
             $table->timestamps();
         });
@@ -28,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('abc');
+        Schema::dropIfExists('advancePayments');
     }
 };

@@ -11,14 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('abcs', function (Blueprint $table) {
+        Schema::create('extensionOrders', function (Blueprint $table) {
             $table->id();
-            $table->string('abcStatus');
-            $table->date('abcDate');
-            $table->string('abc');
-            $table->string('abcRemarks');
-            $table->string('abcState');
-            $table->bigInteger('document_id')->unsigned();
             $table->timestamps();
         });
     }
@@ -28,6 +22,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('abc');
+        Schema::dropIfExists('extensionOrders');
     }
 };
