@@ -2,21 +2,21 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\AdvancePayment;
+use App\Models\VariationOrder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
-class AdvancePaymentController extends Controller
+class VariationOrderController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $aps = AdvancePayment::all();
+        $vos = VariationOrder::all();
         return response()->json([
             'status' => 200,
-            'aps' => $aps,
+            'vos' => $vos,
         ]);
     }
 
@@ -34,41 +34,45 @@ class AdvancePaymentController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'apStatus' => 'required',
-            'apDate' => 'required',
-            'ap' => 'required',
-            'apRemarks' => 'nullable',
-            'apState' => 'required',
+            'voStatus' => 'required',
+            'voDate' => 'required',
+            'voNumbers' => 'required',
+            'voReasons' => 'required',
+            'voRemarks' => 'nullable',
+            'voState' => 'required',
+            'voScope' => 'nullable',
             'document_id' => 'required',
         ]);
 
         if ($validator->fails()) {
             return response()->json([
-                'message' => 'Unable to create advance payment.',
+                'message' => 'Unable to create variation order.',
                 'errors' => $validator->errors(),
             ], 422);
         }
 
         $data = $request->only([
-            'apStatus',
-            'apDate',
-            'ap',
-            'apRemarks',
-            'apState',
+            'voStatus',
+            'voDate',
+            'voNumbers',
+            'voReasons',
+            'voRemarks',
+            'voState',
+            'voScope',
             'document_id']);
 
-        $ap = AdvancePayment::create($data);
+        $vo = VariationOrder::create($data);
 
         return response()->json([
-            'message' => 'Ap created successfully.',
-            'ap' => $ap,
+            'message' => 'Variation order created successfully.',
+            'vo' => $vo,
         ], 201);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(AdvancePayment $advancePayment)
+    public function show(VariationOrder $variationOrder)
     {
         //
     }
@@ -76,7 +80,7 @@ class AdvancePaymentController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(AdvancePayment $advancePayment)
+    public function edit(VariationOrder $variationOrder)
     {
         //
     }
@@ -84,7 +88,7 @@ class AdvancePaymentController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, AdvancePayment $advancePayment)
+    public function update(Request $request, VariationOrder $variationOrder)
     {
         //
     }
@@ -94,20 +98,11 @@ class AdvancePaymentController extends Controller
      */
     public function destroy($id)
     {
-        $advancePayment = AdvancePayment::find($id);
-        $advancePayment->delete();
+        $variationOrder = VariationOrder::find($id);
+        $variationOrder->delete();
 
         return response()->json([
-            'message' => 'advance payment deleted successfully.',
+            'message' => 'Variation order deleted successfully.',
         ], 200);
     }
-    // public function destroy(AdvancePayment $advancePayment)
-    // {
-    //     Log::debug($advancePayment);
-    //     $advancePayment->delete();
-
-    //     return response()->json([
-    //         'message' => 'advance payment deleted successfully.',
-    //     ], 200);
-    // }
 }

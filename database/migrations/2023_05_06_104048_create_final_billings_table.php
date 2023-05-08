@@ -11,14 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('extensionOrders', function (Blueprint $table) {
+        Schema::create('finalBillings', function (Blueprint $table) {
             $table->id();
-            $table->string('eoStatus');
-            $table->date('eoDate');
-            $table->string('eoNumbers');
-            $table->string('eoReasons');
-            $table->string('eoRemarks');
-            $table->string('eoState');
+            $table->string('finalBilling_Status');
+            $table->date('finalBilling_Date');
+            $table->string('finalBilling_Amount');
+            $table->string('finalBilling_Remarks');
+            $table->string('finalBilling_State');
             $table->bigInteger('document_id')->unsigned();
             $table->timestamps();
         });
@@ -29,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('extensionOrders');
+        Schema::dropIfExists('finalBillings');
     }
 };

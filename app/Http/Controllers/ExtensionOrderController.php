@@ -2,21 +2,21 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\AdvancePayment;
+use App\Models\ExtensionOrder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
-class AdvancePaymentController extends Controller
+class ExtensionOrderController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $aps = AdvancePayment::all();
+        $eos = ExtensionOrder::all();
         return response()->json([
             'status' => 200,
-            'aps' => $aps,
+            'eos' => $eos,
         ]);
     }
 
@@ -34,41 +34,43 @@ class AdvancePaymentController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'apStatus' => 'required',
-            'apDate' => 'required',
-            'ap' => 'required',
-            'apRemarks' => 'nullable',
-            'apState' => 'required',
+            'eoStatus' => 'required',
+            'eoDate' => 'required',
+            'eoNumbers' => 'required',
+            'eoReasons' => 'required',
+            'eoRemarks' => 'nullable',
+            'eoState' => 'required',
             'document_id' => 'required',
         ]);
 
         if ($validator->fails()) {
             return response()->json([
-                'message' => 'Unable to create advance payment.',
+                'message' => 'Unable to create extension order.',
                 'errors' => $validator->errors(),
             ], 422);
         }
 
         $data = $request->only([
-            'apStatus',
-            'apDate',
-            'ap',
-            'apRemarks',
-            'apState',
+            'eoStatus',
+            'eoDate',
+            'eoNumbers',
+            'eoReasons',
+            'eoRemarks',
+            'eoState',
             'document_id']);
 
-        $ap = AdvancePayment::create($data);
+        $eo = ExtensionOrder::create($data);
 
         return response()->json([
-            'message' => 'Ap created successfully.',
-            'ap' => $ap,
+            'message' => 'Extension order created successfully.',
+            'eo' => $eo,
         ], 201);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(AdvancePayment $advancePayment)
+    public function show(ExtensionOrder $extensionOrder)
     {
         //
     }
@@ -76,7 +78,7 @@ class AdvancePaymentController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(AdvancePayment $advancePayment)
+    public function edit(ExtensionOrder $extensionOrder)
     {
         //
     }
@@ -84,7 +86,7 @@ class AdvancePaymentController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, AdvancePayment $advancePayment)
+    public function update(Request $request, ExtensionOrder $extensionOrder)
     {
         //
     }
@@ -94,20 +96,11 @@ class AdvancePaymentController extends Controller
      */
     public function destroy($id)
     {
-        $advancePayment = AdvancePayment::find($id);
-        $advancePayment->delete();
+        $extensionOrder = ExtensionOrder::find($id);
+        $extensionOrder->delete();
 
         return response()->json([
-            'message' => 'advance payment deleted successfully.',
+            'message' => 'Extension order deleted successfully.',
         ], 200);
     }
-    // public function destroy(AdvancePayment $advancePayment)
-    // {
-    //     Log::debug($advancePayment);
-    //     $advancePayment->delete();
-
-    //     return response()->json([
-    //         'message' => 'advance payment deleted successfully.',
-    //     ], 200);
-    // }
 }

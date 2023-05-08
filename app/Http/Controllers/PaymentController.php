@@ -2,21 +2,21 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\AdvancePayment;
+use App\Models\Payment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
-class AdvancePaymentController extends Controller
+class PaymentController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $aps = AdvancePayment::all();
+        $ps = Payment::all();
         return response()->json([
             'status' => 200,
-            'aps' => $aps,
+            'ps' => $ps,
         ]);
     }
 
@@ -34,41 +34,41 @@ class AdvancePaymentController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'apStatus' => 'required',
-            'apDate' => 'required',
-            'ap' => 'required',
-            'apRemarks' => 'nullable',
-            'apState' => 'required',
+            'pStatus' => 'required',
+            'pDate' => 'required',
+            'pAmount' => 'required',
+            'pRemarks' => 'nullable',
+            'pState' => 'required',
             'document_id' => 'required',
         ]);
 
         if ($validator->fails()) {
             return response()->json([
-                'message' => 'Unable to create advance payment.',
+                'message' => 'Unable to create payment.',
                 'errors' => $validator->errors(),
             ], 422);
         }
 
         $data = $request->only([
-            'apStatus',
-            'apDate',
-            'ap',
-            'apRemarks',
-            'apState',
+            'pStatus',
+            'pDate',
+            'pAmount',
+            'pRemarks',
+            'pState',
             'document_id']);
 
-        $ap = AdvancePayment::create($data);
+        $p = Payment::create($data);
 
         return response()->json([
-            'message' => 'Ap created successfully.',
-            'ap' => $ap,
+            'message' => 'Payment created successfully.',
+            'p' => $p,
         ], 201);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(AdvancePayment $advancePayment)
+    public function show(Payment $payment)
     {
         //
     }
@@ -76,7 +76,7 @@ class AdvancePaymentController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(AdvancePayment $advancePayment)
+    public function edit(Payment $payment)
     {
         //
     }
@@ -84,7 +84,7 @@ class AdvancePaymentController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, AdvancePayment $advancePayment)
+    public function update(Request $request, Payment $payment)
     {
         //
     }
@@ -92,22 +92,12 @@ class AdvancePaymentController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($id)
+    public function destroy(Payment $payment)
     {
-        $advancePayment = AdvancePayment::find($id);
-        $advancePayment->delete();
+        $payment->delete();
 
         return response()->json([
-            'message' => 'advance payment deleted successfully.',
+            'message' => 'Payment deleted successfully.',
         ], 200);
     }
-    // public function destroy(AdvancePayment $advancePayment)
-    // {
-    //     Log::debug($advancePayment);
-    //     $advancePayment->delete();
-
-    //     return response()->json([
-    //         'message' => 'advance payment deleted successfully.',
-    //     ], 200);
-    // }
 }

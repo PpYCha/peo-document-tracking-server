@@ -2,21 +2,21 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\AdvancePayment;
+use App\Models\SuspensionOrder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
-class AdvancePaymentController extends Controller
+class SuspensionOrderController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $aps = AdvancePayment::all();
+        $sos = SuspensionOrder::all();
         return response()->json([
             'status' => 200,
-            'aps' => $aps,
+            'sos' => $sos,
         ]);
     }
 
@@ -34,41 +34,43 @@ class AdvancePaymentController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'apStatus' => 'required',
-            'apDate' => 'required',
-            'ap' => 'required',
-            'apRemarks' => 'nullable',
-            'apState' => 'required',
+            'soStatus' => 'required',
+            'soDate' => 'required',
+            'soNumbers' => 'required',
+            'soReasons' => 'required',
+            'soRemarks' => 'nullable',
+            'soState' => 'required',
             'document_id' => 'required',
         ]);
 
         if ($validator->fails()) {
             return response()->json([
-                'message' => 'Unable to create advance payment.',
+                'message' => 'Unable to create suspension order.',
                 'errors' => $validator->errors(),
             ], 422);
         }
 
         $data = $request->only([
-            'apStatus',
-            'apDate',
-            'ap',
-            'apRemarks',
-            'apState',
+            'soStatus',
+            'soDate',
+            'soNumbers',
+            'soReasons',
+            'soRemarks',
+            'soState',
             'document_id']);
 
-        $ap = AdvancePayment::create($data);
+        $so = SuspensionOrder::create($data);
 
         return response()->json([
-            'message' => 'Ap created successfully.',
-            'ap' => $ap,
+            'message' => 'Suspension order created successfully.',
+            'so' => $so,
         ], 201);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(AdvancePayment $advancePayment)
+    public function show(SuspensionOrder $suspensionOrder)
     {
         //
     }
@@ -76,7 +78,7 @@ class AdvancePaymentController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(AdvancePayment $advancePayment)
+    public function edit(SuspensionOrder $suspensionOrder)
     {
         //
     }
@@ -84,7 +86,7 @@ class AdvancePaymentController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, AdvancePayment $advancePayment)
+    public function update(Request $request, SuspensionOrder $suspensionOrder)
     {
         //
     }
@@ -94,20 +96,11 @@ class AdvancePaymentController extends Controller
      */
     public function destroy($id)
     {
-        $advancePayment = AdvancePayment::find($id);
-        $advancePayment->delete();
+        $suspensionOrder = SuspensionOrder::find($id);
+        $suspensionOrder->delete();
 
         return response()->json([
-            'message' => 'advance payment deleted successfully.',
+            'message' => 'Suspension order deleted successfully.',
         ], 200);
     }
-    // public function destroy(AdvancePayment $advancePayment)
-    // {
-    //     Log::debug($advancePayment);
-    //     $advancePayment->delete();
-
-    //     return response()->json([
-    //         'message' => 'advance payment deleted successfully.',
-    //     ], 200);
-    // }
 }

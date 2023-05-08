@@ -2,21 +2,21 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\AdvancePayment;
+use App\Models\ExtensionResumption;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
-class AdvancePaymentController extends Controller
+class ExtensionResumptionController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $aps = AdvancePayment::all();
+        $ers = ExtensionResumption::all();
         return response()->json([
             'status' => 200,
-            'aps' => $aps,
+            'ers' => $ers,
         ]);
     }
 
@@ -34,41 +34,43 @@ class AdvancePaymentController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'apStatus' => 'required',
-            'apDate' => 'required',
-            'ap' => 'required',
-            'apRemarks' => 'nullable',
-            'apState' => 'required',
+            'erStatus' => 'required',
+            'erDate' => 'required',
+            'erNumbers' => 'required',
+            'erReasons' => 'required',
+            'erRemarks' => 'nullable',
+            'erState' => 'required',
             'document_id' => 'required',
         ]);
 
         if ($validator->fails()) {
             return response()->json([
-                'message' => 'Unable to create advance payment.',
+                'message' => 'Unable to create extension resumption.',
                 'errors' => $validator->errors(),
             ], 422);
         }
 
         $data = $request->only([
-            'apStatus',
-            'apDate',
-            'ap',
-            'apRemarks',
-            'apState',
+            'erStatus',
+            'erDate',
+            'erNumbers',
+            'erReasons',
+            'erRemarks',
+            'erState',
             'document_id']);
 
-        $ap = AdvancePayment::create($data);
+        $er = ExtensionResumption::create($data);
 
         return response()->json([
-            'message' => 'Ap created successfully.',
-            'ap' => $ap,
+            'message' => 'Extension Resumption created successfully.',
+            'er' => $er,
         ], 201);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(AdvancePayment $advancePayment)
+    public function show(ExtensionResumption $extensionResumption)
     {
         //
     }
@@ -76,7 +78,7 @@ class AdvancePaymentController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(AdvancePayment $advancePayment)
+    public function edit(ExtensionResumption $extensionResumption)
     {
         //
     }
@@ -84,7 +86,7 @@ class AdvancePaymentController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, AdvancePayment $advancePayment)
+    public function update(Request $request, ExtensionResumption $extensionResumption)
     {
         //
     }
@@ -94,20 +96,11 @@ class AdvancePaymentController extends Controller
      */
     public function destroy($id)
     {
-        $advancePayment = AdvancePayment::find($id);
-        $advancePayment->delete();
+        $extensionResumption = ExtensionResumption::find($id);
+        $extensionResumption->delete();
 
         return response()->json([
-            'message' => 'advance payment deleted successfully.',
+            'message' => 'Extension resumption deleted successfully.',
         ], 200);
     }
-    // public function destroy(AdvancePayment $advancePayment)
-    // {
-    //     Log::debug($advancePayment);
-    //     $advancePayment->delete();
-
-    //     return response()->json([
-    //         'message' => 'advance payment deleted successfully.',
-    //     ], 200);
-    // }
 }

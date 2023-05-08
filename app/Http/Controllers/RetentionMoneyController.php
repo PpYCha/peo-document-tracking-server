@@ -2,21 +2,21 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\AdvancePayment;
+use App\Models\RetentionMoney;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
-class AdvancePaymentController extends Controller
+class RetentionMoneyController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $aps = AdvancePayment::all();
+        $rms = RetentionMoney::all();
         return response()->json([
             'status' => 200,
-            'aps' => $aps,
+            'rms' => $rms,
         ]);
     }
 
@@ -34,41 +34,41 @@ class AdvancePaymentController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'apStatus' => 'required',
-            'apDate' => 'required',
-            'ap' => 'required',
-            'apRemarks' => 'nullable',
-            'apState' => 'required',
+            'rmStatus' => 'required',
+            'rmDate' => 'required',
+            'rmAmount' => 'required',
+            'rmRemarks' => 'nullable',
+            'rmState' => 'required',
             'document_id' => 'required',
         ]);
 
         if ($validator->fails()) {
-            return response()->json([
-                'message' => 'Unable to create advance payment.',
+            return resrponse()->json([
+                'message' => 'Unable to create retention money.',
                 'errors' => $validator->errors(),
             ], 422);
         }
 
         $data = $request->only([
-            'apStatus',
-            'apDate',
-            'ap',
-            'apRemarks',
-            'apState',
+            'rmStatus',
+            'rmDate',
+            'rmAmount',
+            'rmRemarks',
+            'rmState',
             'document_id']);
 
-        $ap = AdvancePayment::create($data);
+        $rm = RetentionMoney::create($data);
 
         return response()->json([
-            'message' => 'Ap created successfully.',
-            'ap' => $ap,
+            'message' => 'Retention money created successfully.',
+            'rm' => $rm,
         ], 201);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(AdvancePayment $advancePayment)
+    public function show(RetentionMoney $retentionMoney)
     {
         //
     }
@@ -76,7 +76,7 @@ class AdvancePaymentController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(AdvancePayment $advancePayment)
+    public function edit(RetentionMoney $retentionMoney)
     {
         //
     }
@@ -84,7 +84,7 @@ class AdvancePaymentController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, AdvancePayment $advancePayment)
+    public function update(Request $request, RetentionMoney $retentionMoney)
     {
         //
     }
@@ -94,20 +94,11 @@ class AdvancePaymentController extends Controller
      */
     public function destroy($id)
     {
-        $advancePayment = AdvancePayment::find($id);
-        $advancePayment->delete();
+        $retentionMoney = RetentionMoney::find($id);
+        $retentionMoney->delete();
 
         return response()->json([
-            'message' => 'advance payment deleted successfully.',
+            'message' => 'Retention money deleted successfully.',
         ], 200);
     }
-    // public function destroy(AdvancePayment $advancePayment)
-    // {
-    //     Log::debug($advancePayment);
-    //     $advancePayment->delete();
-
-    //     return response()->json([
-    //         'message' => 'advance payment deleted successfully.',
-    //     ], 200);
-    // }
 }

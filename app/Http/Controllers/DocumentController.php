@@ -144,16 +144,26 @@ class DocumentController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($document_id)
+    // public function destroy($document_id)
+    // {
+    //     $document = Document::where('document_id', $document_id)->first();
+
+    //     if (!$document) {
+    //         return response()->json([
+    //             'message' => 'Document not found.',
+    //         ], 404);
+    //     }
+
+    //     $document->delete();
+
+    //     return response()->json([
+    //         'message' => 'Document deleted successfully.',
+    //     ], 200);
+    // }
+
+    public function destroy($id)
     {
-        $document = Document::where('document_id', $document_id)->first();
-
-        if (!$document) {
-            return response()->json([
-                'message' => 'Document not found.',
-            ], 404);
-        }
-
+        $document = Document::find($id);
         $document->delete();
 
         return response()->json([

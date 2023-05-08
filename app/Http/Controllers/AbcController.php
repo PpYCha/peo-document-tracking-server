@@ -126,6 +126,7 @@ class AbcController extends Controller
      */
     public function destroy(Abc $abc)
     {
+
         $abc->delete();
 
         return response()->json([

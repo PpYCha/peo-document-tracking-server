@@ -2,21 +2,21 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\AdvancePayment;
+use App\Models\Progressbiling;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
-class AdvancePaymentController extends Controller
+class ProgressBillingController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $aps = AdvancePayment::all();
+        $pgs = Progressbiling::all();
         return response()->json([
             'status' => 200,
-            'aps' => $aps,
+            'pgs' => $pgs,
         ]);
     }
 
@@ -34,41 +34,43 @@ class AdvancePaymentController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'apStatus' => 'required',
-            'apDate' => 'required',
-            'ap' => 'required',
-            'apRemarks' => 'nullable',
-            'apState' => 'required',
+            'pgStatus' => 'required',
+            'pgDate' => 'required',
+            'pgNumbers' => 'nullable',
+            'pgAmount' => 'nullable',
+            'pgRemarks' => 'nullable',
+            'pgState' => 'required',
             'document_id' => 'required',
         ]);
 
         if ($validator->fails()) {
             return response()->json([
-                'message' => 'Unable to create advance payment.',
+                'message' => 'Unable to create progress billing.',
                 'errors' => $validator->errors(),
             ], 422);
         }
 
         $data = $request->only([
-            'apStatus',
-            'apDate',
-            'ap',
-            'apRemarks',
-            'apState',
+            'pgStatus',
+            'pgDate',
+            'pgNumbers',
+            'pgAmount',
+            'pgRemarks',
+            'pgState',
             'document_id']);
 
-        $ap = AdvancePayment::create($data);
+        $pg = Progressbiling::create($data);
 
         return response()->json([
-            'message' => 'Ap created successfully.',
-            'ap' => $ap,
+            'message' => 'Progress billing created successfully.',
+            'pg' => $pg,
         ], 201);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(AdvancePayment $advancePayment)
+    public function show(Progressbiling $progressbiling)
     {
         //
     }
@@ -76,7 +78,7 @@ class AdvancePaymentController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(AdvancePayment $advancePayment)
+    public function edit(Progressbiling $progressbiling)
     {
         //
     }
@@ -84,7 +86,7 @@ class AdvancePaymentController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, AdvancePayment $advancePayment)
+    public function update(Request $request, Progressbiling $progressbiling)
     {
         //
     }
@@ -94,20 +96,11 @@ class AdvancePaymentController extends Controller
      */
     public function destroy($id)
     {
-        $advancePayment = AdvancePayment::find($id);
-        $advancePayment->delete();
+        $progressbiling = Progressbiling::find($id);
+        $progressbiling->delete();
 
         return response()->json([
-            'message' => 'advance payment deleted successfully.',
+            'message' => 'Progress billing deleted successfully.',
         ], 200);
     }
-    // public function destroy(AdvancePayment $advancePayment)
-    // {
-    //     Log::debug($advancePayment);
-    //     $advancePayment->delete();
-
-    //     return response()->json([
-    //         'message' => 'advance payment deleted successfully.',
-    //     ], 200);
-    // }
 }
